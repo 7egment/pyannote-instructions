@@ -1,4 +1,4 @@
-### System Info + NVIDIA Drivers
+## System Info + NVIDIA Drivers
 
 I'm starting on a fresh install of Ubuntu 22.04 Server on a rented RTX 4090 instance from [TensorDock](https://www.tensordock.com/).
 
@@ -9,7 +9,7 @@ wget -nv -O- https://lambdalabs.com/install-lambda-stack.sh | I_AGREE_TO_THE_CUD
 
 After verifying NVIDIA drivers, we can begin with the `pyannote` install.
 
-### Installing PyTorch & pyannote.audio
+## Installing PyTorch & pyannote.audio
 
 First, we need [`uv`](https://github.com/astral-sh/uv), which is a better version of `pip`.
 ```
@@ -26,7 +26,7 @@ We then install PyTorch and `pyannote` (this will take a few mins).
 uv pip install torch torchaudio pyannote.audio
 ```
 
-### Running pyannote.audio Offline
+## Running pyannote.audio Offline
 
 By default, `pyannote-audio` talks to HuggingFace servers. On the very first run, it downloads the model, and then on _every single_ subsequent run, it talks to the servers as well (I assume for analytics collection).
 
@@ -42,7 +42,7 @@ sed -i "s/e6quisitory/$USER/g" config.yaml
 cd ..
 ```
 
-### Diarization Script
+## Diarization Script
 
 Let's make a folder called `diarize` and put our diarization script in there.
 
@@ -111,7 +111,7 @@ cat segments.json
 
 Done!
 
-### Notes on Memory Usage
+## Notes on Memory Usage
 The script loads the audio into GPU memory for faster processing. This means your GPU must have enough VRAM to fit in the audio. The amount of memory needed (in MB) is about: 
 ```
 0.828822055 * <audio_duration_in_seconds>
@@ -123,3 +123,12 @@ So for an hour long `.wav` file, ~3 GB VRAM is needed.
 0.55283525509 * <audio_duration_in_seconds>
 ```
 So for an hour long `.wav` file, ~2 GB RAM is needed.
+
+## Monitoring GPU Usage
+`nvitop` is a great too to monitor GPU and CPU usage.
+
+With the Python virtual enviroment activated:
+```
+uv pip install nvitop
+nvitop
+```
