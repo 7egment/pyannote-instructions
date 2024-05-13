@@ -52,7 +52,7 @@ cd diarize
 ```
 
 The script (`diarize.py`):
-```
+``` python
 import json
 import os
 import time
